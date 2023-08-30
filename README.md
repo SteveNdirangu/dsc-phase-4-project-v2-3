@@ -1,206 +1,244 @@
-# Phase 4 Project Description
+#**Title: Movie Recommendation for "Moviefix" Stakeholder**
 
-Final phase down -- you're absolutely crushing it! You've made it all the way through one of the toughest phases of this course. You must have an amazing brain in your head!
 
-<img src='https://raw.githubusercontent.com/learn-co-curriculum/dsc-phase-4-project-v2-3/main/images/brain.gif'>
+#**Business Understanding**
+#### The movie industry is fast growing, and with so many options, there is need for cutting edge user interactivity. This involves tailoring their movie watching experience via intuitive recommendations that can give them interesting options based on what they prefer, while also enticing them with other content that they may like
 
-You have one last project to complete before the Capstone!
+#### It is for this very reason we are working on a recommendation system for the "Moviefix" firm, in order to not only capture the users, but also keep them coming back for more. To accomplish this, our model will create 5(five) recommendations that will be given to the user.
 
-In this project description, we will cover:
 
-* Project Overview
-* Deliverables
-* Grading
-* Getting Started
+# **Problem Statement**
+The main challenge is to design and implement a movie recommendation system that employs collaborative filtering techniques to predict movie preferences for users based on their past ratings. In short, to analyse their past activities and give them recommendations based on their tastes.
 
-## Project Overview
+To address a potential "cold start" problem (where new users or movies have limited ratings), if possible, we will attempt to explore a hybrid approach that combines collaborative filtering with content-based filtering.
 
-For this project, you will engage in an **advanced supervised modeling process** from start to finish, solving either a classification or a regression problem using an advanced dataset.
+The success of this project will be measured by evaluating the accuracy and relevance of the recommendations via metrics such as Mean Absolute Error (MAE) and Root Mean Squared Error (RMSE) that will gauge the performance of the model.
 
-### Business Problem and Data
+Ultimately, the objective is to build a recommendation system that enhances user engagement, encourages exploration of diverse movies, and contributes to the overall satisfaction of users on the platform.
 
-Similar to the Phase 3 project, you are responsible for choosing a dataset as well as defining a stakeholder and business problem. In addition to these choices, you can choose between any of the four advanced supervised modeling techniques covered in Phase 4:
 
-- Time Series Modeling
-- Recommendation System
-- Image Classification with Deep Learning
-- Natural Language Processing
+# **Data understanding**
 
-For complete details, see [Phase 4 Project - Choosing a Dataset](https://github.com/learn-co-curriculum/dsc-phase-4-choosing-a-dataset).
+The dataset describes 5-star rating and free-text tagging activity from [MovieLens](http://movielens.org), a movie recommendation service. It contains 100836 ratings and 3683 tag applications across 9742 movies. These data were created by 610 users between March 29, 1996 and September 24, 2018. This dataset was generated on September 26, 2018.
 
-### Key Points
+Users were selected at random for inclusion. All selected users had rated at least 20 movies. No demographic information is included. Each user is represented by an id, and no other information is provided.
 
-### Advanced Data Types and Modeling
+The data are contained in the files `links.csv`, `movies.csv`, `ratings.csv` and `tags.csv`.
+The dataset was provided by MovieLens, a movie recommendation service. It includes the movies and the rating scores made for these movies contains. It contains 100,000 ratings (1–5) from 943 users on 1682 movies.
+**1) Movies:**
 
-The purpose of this project is to demonstrate that you have mastered the basics of some type of modeling technique beyond the techniques introduced in Phase 3. This is your chance to tailor your work to a **data science audience** in particular, with a clear notebook narrative that illustrates your process. The resulting presentation slides will be substantially similar to a Phase 3 presentation, but someone reading your notebook should be able to see your grasp of the specific advanced modeling technique.
+Has information about each movie, such as movie ID, title, and genres.
 
-### Validation Strategy
+Columns:
 
-A **validation strategy** means a strategy to demonstrate that your model will actually perform well on unseen data. In Phase 3 this was relatively straightforward to accomplish with the `train_test_split` function from scikit-learn. This may or may not be appropriate for the project you select. Make sure that you are thinking about this strategy from the start and incorporating it into your notebook narrative.
+- **movieId:** the unique numerical identifier for each movie. This ID is used to connect the movie information with the ratings and links datasets. This identifier is crucial for linking the movie information with other datasets, especially the ratings dataset. It acts as a key to connect the movie information with user interactions (ratings) and potentially external databases (links).
+- **title:** The name of the movie together with its year of release, is a string type.
 
-### Choosing a Dataset
+- **genres:** Genres associated with the movie. Each movie belongs to one or even a combination of genres, marking its type and both distinguishing it from others as well as linking it to a certain category. Genres are a pipe-separated list, and are selected from the following:
 
-We've given you a lot of choices - don't get stuck spending too much time choosing which project to do. Give yourself a firm time limit for picking a project (e.g. 2 hours) so you can get on with making something great. Don't worry about picking the perfect project - remember that you will get to do a new, larger Capstone project very soon!
+* Action
+* Adventure
+* Animation
+* Children's
+* Comedy
+* Crime
+* Documentary
+* Drama
+* Fantasy
+* Film-Noir
+* Horror
+* Musical
+* Mystery
+* Romance
+* Sci-Fi
+* Thriller
+* War
+* Western
+* (no genres listed)
 
-## The Deliverables
+**2) Ratings Dataset:**
 
-There are three deliverables for this project:
+The ratings dataset contains user-movie interactions, including user IDs, movie IDs, and ratings.
+Collaborative filtering algorithms will leverage this dataset to predict movie ratings for users based on their historical ratings.
 
-* A **non-technical presentation**
-* A **Jupyter Notebook**
-* A **GitHub repository**
+Size: The dataset contains information about user-movie interactions, where each row represents a user's rating for a specific movie.
 
-The checklist of requirements is the same for Phase 4 as it was in Phase 3. This will also be the checklist for Capstone!
+Columns:
 
-### Non-Technical Presentation
+- **userId:** unique integer identifier for each user, to track their interactions
 
-The non-technical presentation should be very similar to the presentation you gave in Phase 3. You can feel free to mention the specific models and metrics you used, but make sure you translate everything for an audience who is not familiar with data science.
+- **movieId:** A unique integer identifier for each movie. This identifier connects the ratings with specific movies. It links user ratings to the movies they've interacted with.
+- **rating:** The value representing how much a user liked a particular movie. ranging from 1 to 5, with half-star increments.
+- **timestamp:** A timestamp indicating when the rating was given. Timestamps represent seconds since midnight Coordinated Universal Time (UTC) of January 1, 1970.
 
-### Jupyter Notebook
+**3)Tags**: Tags are user-generated metadata about movies. Each tag is typically a single word or short phrase. The meaning, value, and purpose of a particular tag is determined by each user.
+Columns:
+- **userId** The user's unique Identifier
+- **movieId** The Movie's Unique identifier
+- **tag**- the tag entered by a user to describe a movie
+- **timestamp**-Timestamps represent seconds since midnight Coordinated Universal Time (UTC) of January 1, 1970.
 
-The notebook will have the same checklist elements as in Phase 3. However, **this time around the Communication rubric element will focus on the technical notebook**. A data science professional reading your notebook should be able to understand all of your data preparation and modeling decisions.
+**4) Links Dataset:**
+Identifiers that can be used to link to other sources of movie data, that is external databases
+Columns:
 
-### GitHub Repository
+- **movieId:** A unique identifier for each movie. This identifier corresponds to the movie ID in the MovieLens dataset.
+- **imdbId:** The identifier of the movie in the IMDb (Internet Movie Database) system. This identifier is used to connect the movie with its corresponding entry in the IMDb database. IMDb is a widely-used database for movie information, including details about cast, crew, plot, and more.
+- **tmdbId:** The identifier of the movie in the TMDB (The Movie Database) system. This identifier links the movie to its corresponding entry in the TMDB database.
 
-The GitHub repository should also be very similar to the Phase 3 repository.
+This dataset might offer additional contextual information for content-based filtering, especially for new users.
 
-The main additional element to consider is **reproducibility**, since many of the dataset options are too large to be saved directly in a GitHub repository. Make sure you include clear instructions for how someone would reproduce your modeling process, potentially including any scripts you used to organize data into directories.
+# EDA samples
+movieId	title	genres
+0	1	Toy Story (1995)	Adventure|Animation|Children|Comedy|Fantasy
+1	2	Jumanji (1995)	Adventure|Children|Fantasy
+2	3	Grumpier Old Men (1995)	Comedy|Romance
+3	4	Waiting to Exhale (1995)	Comedy|Drama|Romance
+4	5	Father of the Bride Part II (1995)	Comedy
+5	6	Heat (1995)	Action|Crime|Thriller
+6	7	Sabrina (1995)	Comedy|Romance
+7	8	Tom and Huck (1995)	Adventure|Children
+8	9	Sudden Death (1995)	Action
+9	10	GoldenEye (1995)	Action|Adventure|Thriller
 
-## Grading
+Visualizations of EDA
+![image](https://github.com/SteveNdirangu/dsc-phase-4-project-v2-3/assets/127976914/579742c4-426c-467d-a565-84cfa6238c2c)
+![image](https://github.com/SteveNdirangu/dsc-phase-4-project-v2-3/assets/127976914/514abf70-cab2-4f96-b86e-0e9b4bde9ffc)
+![image](https://github.com/SteveNdirangu/dsc-phase-4-project-v2-3/assets/127976914/14ee0316-4489-415d-a0c7-c7f473333ae2)
+![image](https://github.com/SteveNdirangu/dsc-phase-4-project-v2-3/assets/127976914/bb3cbc1e-076a-4a04-b0b3-7fb664f9aed7)
 
-***To pass this project, you must pass each rubric objective.*** The project rubric objectives for Phase 4 are:
+# Data cleaning
+We removed some duplicates in the Movies dataset and the Ratings dataset, which were the 2 focus datasets of this projest
 
-1. Attention to Detail
-2. Advanced ML Communication
-3. Advanced Data Preparation
-4. Advanced ML Modeling
+print("duplicates in ID: ", movies.movieId.duplicated().sum())
+print("duplicates in Title: ", movies.title.duplicated().sum())
+print("duplicates in Genres: ", movies.genres.duplicated().sum())
+duplicates in ID:  0
+duplicates in Title:  5
+duplicates in Genres:  8791
+## Remove duplicates based on the "title" column, keeping the first occurence
+movies.drop_duplicates(subset="title", keep="first", inplace=True)
 
-### Attention to Detail
 
-Once again, the Attention to Detail standard has increased. ***In Phase 4, you need to complete 90% (9 out of 10) or more of the checklist elements in order to pass the Attention to Detail objective.***
+## Remove duplicates based on "userId" and "movieId" columns
+ratings.drop_duplicates(subset=["userId", "movieId"], keep="first", inplace=True)
+#Check for missing values
+print(ratings.isnull().sum())
+#Reset the index of the dataframe
+ratings.reset_index(drop=True, inplace=True)
 
-**NOTE THAT THE PASSING BAR IS HIGHER IN PHASE 4 THAN IT WAS IN PHASE 3!**
 
-#### Exceeds Objective
 
-100% of the project checklist items are complete
+# We then Merged the data into one, and proceeded to explore it with some visualizations
+#Merge movies and ratings dataframes based on movieId
+movie_ratings = pd.merge(movies, ratings, on='movieId', how='inner')
 
-#### Meets Objective (Passing Bar)
+#Merge the result with links dataframe based on movieId
+movie_ratings_links = pd.merge(movie_ratings, links, on='movieId', how='inner')
 
-90% of the project checklist items are complete
+#Merge the result with tags dataframe based on userId and movieId
+consolidated_data = pd.merge(movie_ratings_links, tags, on=['userId', 'movieId'], how='left')
 
-#### Approaching Objective
 
-80% of the project checklist items are complete
+![image](https://github.com/SteveNdirangu/dsc-phase-4-project-v2-3/assets/127976914/e07d1fb0-5645-426a-a4df-ea3f2488f2c7)
+![image](https://github.com/SteveNdirangu/dsc-phase-4-project-v2-3/assets/127976914/524982cf-3c41-4ebc-a3e0-0d17007a5698)
 
-#### Does Not Meet Objective
 
-70% or fewer of the project checklist items are complete
 
-### Advanced ML Communication
+# we chose a popularity of 50and above votes, since lower votes, even if the rating is high, mean less popularity
+popularity_threshold =50
+rating_popular_movie = combined_ratingCount_data.query("totalRatingCount >= " + str(popularity_threshold))
+rating_popular_movie
 
-Once again, you are expected to communicate the results of an ML modeling process. Just like in Phase 3, we are looking for *rationale, results, limitations, and recommendations.*
 
-In Phase 4, the emphasis is on the **Jupyter Notebook**. The notebook should include a **summary** at the beginning that briefly and accurately describes your process. The summary should be approximately 250 words -- about the size of a research paper abstract.
+# **Feature selection**
+We decided to drop the Tags and their timestamps, relying on the actual ratings instead , we did the same for the links as we would not be using outside resources, this was especially done due to their missing values, 
+We also found out that we had **genre_list**, which was a better representation of **"genres"**, so we dropped the latter
+**title length** was not really relevant to recommendation, so we dropped it as well
 
-Summary elements:
+We then pivoted the resulting features table in order to carry out **collaborative filtering**
 
-* Business and data understanding: *what kind of data are you using, and what makes it well-suited for the business problem?*
-  * You do not need to include any data visualizations in your summary, but consider including relevant descriptive statistics
-* Data preparation: *why did you choose the data preparation steps that you did, and what was the result?*
-  * This should be specific to the kind of data you are working with. For example, if you are doing an NLP project, what did you decide to do with stopwords?
-  * Be sure to list the packages/libraries used to prepare the data, and why
-* Modeling: *what modeling package(s) did you use, which model(s) within the package(s), and what tuning steps did you take?*
-  * For some projects there may be only one applicable package; you should still briefly explain why this was the appropriate choice
-  * For neural networks projects, be sure to describe your model architecture choices
-* Evaluation: *how well did your final model perform?*
-  * Include one or more relevant metrics
-  * Be sure to briefly describe your validation approach
 
-#### Exceeds Objective
 
-Communicates advanced modeling summary as well as a narrative throughout the notebook text that demonstrates mastery of an advanced topic
+# **Implementation of Nearest Neighbors Model, utilising cosine metric**
+movie_features_selected_matrix = csr_matrix(movie_features_selected.values)
+model_knn = NearestNeighbors(metric ="cosine", algorithm="brute")
+model_knn.fit(movie_features_selected_matrix)
 
-> Decisions should be justified and outcomes evaluated in Markdown throughout the notebook
+## We then querried the necessary distances and indices from the model, and looped through the rows(now movie titles to train the model)
+def get_movie_recommendations_with_threshold(movie_title, n_neighbors=6, min_ratings_threshold=10):
+    try:
+        # Find the index of the given movie title
+        movie_index = movie_features_selected.index.get_loc(movie_title)
 
-#### Meets Objective (Passing Bar)
+        # Check if the movie meets the minimum ratings threshold
+        if movie_features_selected.iloc[movie_index, :].sum() < min_ratings_threshold:
+            print("This movie has too few ratings to provide reliable recommendations.")
+            return
 
-Successfully communicates a summary of an advanced modeling technique including business and data understanding, data preparation, modeling, and evaluation
+        # Query the k-NN model and print recommendations
+        get_movie_recommendations(movie_title, n_neighbors)
 
-> It is possible to meet this bar with just a summary and not a narrative throughout the notebook, so long as the steps taken are justifiable and free of major errors. See the Approaching Objective section for an explanation of what a "major error" means.
+    except KeyError:
+        print("Movie title not found in the dataset.")
 
-#### Approaching Objective
+#Example usage
+get_movie_recommendations_with_threshold("Toy Story (1995)")
 
-Communicates advanced modeling summary with at least one major error
 
-> A major error means that one of the required elements of the summary was missing, or some aspect of the communication was fundamentally incorrect. For example, if you stated that you performed "deep learning" when you actually used `CountVectorizer` and `MultinomialNB` from scikit-learn, that would be a major error. Another example would be if you described a regression task as a classification task, or if you described supervised learning as unsupervised learning.
+## afterwards, we loaded the data into surprise in order to carry out training and testing using the SVD model
+from surprise import SVD
+from surprise.model_selection import train_test_split
+from surprise import accuracy
 
-#### Does Not Meet Objective
+#Create Surprise Dataset
+reader = Reader(rating_scale=(0.5, 5.0))
+data = Dataset.load_from_df(movie_features1[['userId', 'movieId', 'rating']], reader)
 
-Does not communicate advanced modeling summary
+#Split the data into train and test sets
+trainset, testset = train_test_split(data, test_size=0.2, random_state=42)
 
-> Markdown headings and occasional narrative text throughout the notebook are not sufficient in this phase, even if they were in previous phases. You need to include a summary at the beginning of your notebook.
+#Train an SVD model on the trainset
+svd_model = SVD(n_factors=50, random_state=42)
+svd_model.fit(trainset)
 
-### Advanced Data Preparation
+#Get the user-item predicted ratings
+test_predictions = svd_model.test(testset)
 
-Once again, this objective is very similar to Phase 3, although the complexity has increased.
+#Calculate RMSE using the Surprise accuracy module
+rmse = accuracy.rmse(test_predictions)
+print("RMSE: {:.2f}".format(rmse))
 
-#### Exceeds Objective
+# this gave us an RMSE score of 0.83 
+# we were unable to implement cold start handling due to crashing of runtime, however the model works well
 
-Goes above and beyond with data preparation, such as feature engineering, using pipelines, or using unsupervised techniques
 
-> Supervised learning is the core of this project, but feel free to use unsupervised techniques for data analysis or preparation
+# Conclusion
+In this project, we set out to build a movie recommendation system using collaborative filtering and content-based approaches. We explored a diverse dataset containing movie ratings, genres, and user interactions to create a personalized movie recommendation system. Through data cleaning, exploratory data analysis (EDA), and the implementation of recommendation algorithms, we've gained insights into the movie preferences of users and successfully generated movie recommendations.
 
-#### Meets Objective (Passing Bar)
 
-Successfully prepares data for modeling, using at least one Python package other than scikit-learn
 
-> Your final model does not need to use anything other than scikit-learn, but you should explore other tools during your modeling process
+# Key Findings and Achievements
+**Data Cleaning and EDA**: We started by preprocessing the dataset, removing duplicates, and handling missing values. Exploratory data analysis provided us with valuable insights into the distribution of movie genres, user ratings, and user interactions.
 
-#### Approaching Objective
+**Collaborative Filtering (SVD)**: Using the Surprise library, we built a collaborative filtering model based on matrix factorization, specifically the Singular Value Decomposition (SVD) algorithm. The model effectively captured user preferences and generated accurate movie recommendations. The calculated Root Mean Square Error (RMSE) of 0.83 indicated the model's reasonable predictive performance.
 
-Prepares some data successfully, but has at least one major error
 
-#### Does Not Meet Objective
 
-Does not prepare data for modeling
+# Recommendations for Improvement
+**Hybrid Recommendations**: While not implemented in this project, combining collaborative filtering and content-based recommendations can enhance the accuracy and coverage of recommendations. Hybrid models address the limitations of each approach, providing more robust suggestions for users.
 
-### Advanced ML Modeling
+**Fine-Tuning and Evaluation**: Experiment with different hyperparameters, algorithms, and preprocessing techniques to fine-tune the recommendation models further. Utilize evaluation metrics like RMSE, precision, recall, and F1-score to objectively assess the models' performance.
 
-This is your real opportunity to flex those new Phase 4 skills!
+**User Interface and Deployment**: Consider creating a user interface where users can input their preferences and receive personalized recommendations. This interface could be deployed on a web server, allowing users to interact with the recommendation system seamlessly.
 
-#### Exceeds Objective
 
-Goes above and beyond in the modeling process, such as using models from multiple different packages or model explainability tools
 
-> You are encouraged but not required to use models from multiple different packages. The feasibility of this depends on your choice of project. For time series, this might mean trying both StatsModels and Prophet. For image classification, this might mean using TensorFlow with and without transfer learning.
+# **Conclusion**
+In conclusion, this recommendation system project has demonstrated the power of collaborative filtering and content-based approaches in providing users with personalized movie recommendations. By combining user-item interactions and content features, we've created a system that caters to diverse user preferences. As movie datasets continue to grow, the techniques explored in this project can be scaled and adapted to real-world applications, contributing to enhanced user experiences and engagement.
 
-> See [this book chapter](https://christophm.github.io/interpretable-ml-book/lime.html) for an introduction to LIME for model explainability
+This project serves as a stepping stone toward building more advanced recommendation systems and opens the door to exploring cutting-edge techniques in the field of machine learning and artificial intelligence.
 
-#### Meets Objective (Passing Bar)
 
-Successfully builds and evaluates multiple models using an appropriate model validation technique
 
-> As noted previously, the `train_test_split` from scikit-learn may or may not be appropriate for your modeling task. Be sure to investigate appropriate techniques so you are confident in the performance of your final model on unseen data
 
-#### Approaching Objective
-
-Builds multiple models with at least one major error
-
-#### Does Not Meet Objective
-
-Does not build multiple models
-
-## Getting Started
-
-Please start by reviewing the contents of this project description. If you have any questions, please ask your instructor ASAP.
-
-Once you are ready to begin the project, you will need to complete the Project Proposal.
-
-Recall that more information is available in [Phase 4 Project - Choosing a Dataset](https://github.com/learn-co-curriculum/dsc-phase-4-choosing-a-dataset).
-
-To get started with project development, create a new repository on GitHub. For this project, we recommend that you do not fork the template repository, but rather that you make a new repository from scratch, starting by going to [github.com/new](https://github.com/new).
-
-## Summary
-
-This project is your chance to show off your data science prowess with some advanced machine learning algorithms. Now that you've gone through all of the core course content, we're excited to see what you are able to do!
