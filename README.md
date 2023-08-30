@@ -130,6 +130,7 @@ ratings.reset_index(drop=True, inplace=True)
 
 
 # We then Merged the data into one, and proceeded to explore it with some visualizations
+
 #Merge movies and ratings dataframes based on movieId
 movie_ratings = pd.merge(movies, ratings, on='movieId', how='inner')
 
@@ -152,6 +153,7 @@ rating_popular_movie
 
 
 # **Feature selection**
+
 We decided to drop the Tags and their timestamps, relying on the actual ratings instead , we did the same for the links as we would not be using outside resources, this was especially done due to their missing values, 
 We also found out that we had **genre_list**, which was a better representation of **"genres"**, so we dropped the latter
 **title length** was not really relevant to recommendation, so we dropped it as well
@@ -161,11 +163,13 @@ We then pivoted the resulting features table in order to carry out **collaborati
 
 
 # **Implementation of Nearest Neighbors Model, utilising cosine metric**
+
 movie_features_selected_matrix = csr_matrix(movie_features_selected.values)
 model_knn = NearestNeighbors(metric ="cosine", algorithm="brute")
 model_knn.fit(movie_features_selected_matrix)
 
 ## We then querried the necessary distances and indices from the model, and looped through the rows(now movie titles to train the model)
+
 def get_movie_recommendations_with_threshold(movie_title, n_neighbors=6, min_ratings_threshold=10):
     try:
         # Find the index of the given movie title
@@ -187,6 +191,7 @@ get_movie_recommendations_with_threshold("Toy Story (1995)")
 
 
 ## afterwards, we loaded the data into surprise in order to carry out training and testing using the SVD model
+
 from surprise import SVD
 from surprise.model_selection import train_test_split
 from surprise import accuracy
