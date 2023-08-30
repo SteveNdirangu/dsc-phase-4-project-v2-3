@@ -1,7 +1,7 @@
-#**Title: Movie Recommendation for "Moviefix" Stakeholder**
+# **Title: Movie Recommendation for "Moviefix" Stakeholder**
 
 
-#**Business Understanding**
+# **Business Understanding**
 #### The movie industry is fast growing, and with so many options, there is need for cutting edge user interactivity. This involves tailoring their movie watching experience via intuitive recommendations that can give them interesting options based on what they prefer, while also enticing them with other content that they may like
 
 #### It is for this very reason we are working on a recommendation system for the "Moviefix" firm, in order to not only capture the users, but also keep them coming back for more. To accomplish this, our model will create 5(five) recommendations that will be given to the user.
